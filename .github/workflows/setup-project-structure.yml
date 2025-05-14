@@ -1,0 +1,42 @@
+name: Setup project structure
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  setup-project-structure:
+    if: ${{ github.repository != 'cuenca-mx/fast-agave-app-template' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+      - name: Set up Python
+        uses: actions/setup-python@v2.2.2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          pip install -q -r requirements.txt
+      - name: Replace template placeholders
+        run: |
+          repository_name=${{ github.repository }}
+          repository_name=${repository_name//cuenca-mx\/}
+          sed -i "s/\bname\b/$repository_name/g" cookiecutter.json
+          cookiecutter --no-input .
+      - name: Clean-up directory
+        run: |
+          shopt -s extglob
+          rm -rf !(fast_agave_app_template_folder)
+          rm .github/workflows/setup-project-structure.yml
+          rm .github/workflows/test-template.yml
+          mv fast_agave_app_template_folder/* .
+          rm -rf fast_agave_app_template_folder
+        shell: bash
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Setup project structure"
+          push_options: --force

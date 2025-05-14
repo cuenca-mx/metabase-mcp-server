@@ -1,0 +1,5 @@
+{
+  "repository_slug": "fast_agave_app_template_folder",
+  "repository_name": "name",
+  "top_level_package": "{{ cookiecutter.repository_name|lower|replace('-', '_') }}"
+}

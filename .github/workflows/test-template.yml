@@ -1,0 +1,84 @@
+name: Test Template
+
+on: push
+
+env:
+  PYPI_USERNAME: ${{ secrets.PYPI_USERNAME }}
+  PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+
+jobs:
+  lint:
+    if: ${{ github.repository == 'cuenca-mx/fast-agave-app-template' }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2.2.2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        pip install -q -r requirements.txt
+    - name: Replace placeholders
+      run: |
+        cookiecutter --no-input --overwrite-if-exists .
+    - name: Lint
+      run: |
+        cd fast_agave_app_template_folder/
+        pip config set global.extra-index-url https://$PYPI_USERNAME:$PYPI_PASSWORD@pypi.cuenca.io:8081
+        make install-test
+        make lint
+
+  pytest:
+    if: ${{ github.repository == 'cuenca-mx/fast-agave-app-template' }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2.2.2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        pip install -q -r requirements.txt
+    - name: Replace placeholders
+      run: |
+        cookiecutter --no-input --overwrite-if-exists .
+    - name: Lint
+      run: |
+        cd fast_agave_app_template_folder/
+        pip config set global.extra-index-url https://$PYPI_USERNAME:$PYPI_PASSWORD@pypi.cuenca.io:8081
+        make install-test
+        export $(<env.template)
+        pytest
+
+  coverage:
+    if: ${{ github.repository == 'cuenca-mx/fast-agave-app-template' }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Python
+      uses: actions/setup-python@v2.2.2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        pip install -q -r requirements.txt
+    - name: Replace placeholders
+      run: |
+        cookiecutter --no-input --overwrite-if-exists .
+    - name: Lint
+      run: |
+        cd fast_agave_app_template_folder/
+        pip config set global.extra-index-url https://$PYPI_USERNAME:$PYPI_PASSWORD@pypi.cuenca.io:8081
+        make install-test
+        export $(<env.template)
+        pytest --cov-report=xml
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v2.1.0
+      with:
+        token: e8a99dc5-cda7-4590-a951-89a0c553f65f
+        file: ./fast_agave_app_template_folder/coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: true
