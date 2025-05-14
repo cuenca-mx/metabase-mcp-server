@@ -12,7 +12,7 @@ secrets = get_secrets_config()
 sentry_sdk.init(dsn=SENTRY_DSN)
 
 connect(host=secrets['DATABASE_URI'])
-app = FastAPI(title='{{cookiecutter.repository_name}}')
+app = FastAPI(title='mcp-server-metabase')
 
 SentryAsgiMiddleware._run_asgi2 = SentryAsgiMiddleware._run_asgi3  # type: ignore  # noqa: E501
 

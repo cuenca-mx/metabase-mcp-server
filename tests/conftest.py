@@ -24,7 +24,7 @@ def create_secret():
 
 @pytest.fixture
 def client(create_secret) -> Generator[TestClient, None, None]:
-    from {{cookiecutter.top_level_package}}.app import app
+    from mcp_server_metabase.app import app
 
     client = TestClient(app)
     yield client

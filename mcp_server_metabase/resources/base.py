@@ -12,5 +12,5 @@ app = RestApiBlueprint()
 @app.get('/')
 @authentication_exempt
 @authorization_exempt
-async def {{cookiecutter.top_level_package}}() -> Dict:
-    return dict(greeting="I'm {{cookiecutter.repository_name}}!!!")
+async def mcp_server_metabase() -> Dict:
+    return dict(greeting="I'm mcp-server-metabase!!!")

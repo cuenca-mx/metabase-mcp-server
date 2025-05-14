@@ -1,7 +1,7 @@
 SHELL := bash
 PATH := ./venv/bin:${PATH}
 PYTHON = python3.8
-PROJECT = {{cookiecutter.top_level_package}}
+PROJECT = mcp_server_metabase
 isort = isort $(PROJECT) tests
 black = black -S -l 79 --target-version py38 $(PROJECT) tests
 
