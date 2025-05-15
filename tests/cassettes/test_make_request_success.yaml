@@ -1,0 +1,100 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - metaba-metab-juitpiw6882d-1438375467.us-west-2.elb.amazonaws.com
+      user-agent:
+      - python-httpx/0.28.1
+      x-api-key:
+      - DUMMY_AUTHORIZATION
+    method: GET
+    uri: https://metabase.domain.com/api/card/?f=all
+  response:
+    body:
+      string: !!binary |
+        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
+    headers:
+      Cache-Control:
+      - max-age=0, no-cache, must-revalidate, proxy-revalidate
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Security-Policy:
+      - font-src *; script-src 'self' https://maps.google.com https://accounts.google.com    'sha256-9uFLu5CG8mWlvx0LK6lgendCxUX57TuWk3wkgZpBeWU='
+        'sha256-isH538cVBUY8IMlGYGbWtBwr+cGqkc4mN6nLcA7lUjE=' 'sha256-3N2Z+Nu++/yNMVHIl863JigVmt2Nr9gt2doEMJT2Wzk=';
+        style-src 'self' 'nonce-DrWHuGRY1C'   https://accounts.google.com; manifest-src
+        'self'; connect-src 'self' https://accounts.google.com metabase.us10.list-manage.com   ;
+        img-src * 'self' data:; frame-src 'self' youtube.com *.youtube.com youtu.be
+        *.youtu.be loom.com *.loom.com vimeo.com *.vimeo.com docs.google.com calendar.google.com
+        airtable.com *.airtable.com typeform.com *.typeform.com canva.com *.canva.com
+        codepen.io *.codepen.io figma.com *.figma.com grafana.com *.grafana.com miro.com
+        *.miro.com excalidraw.com *.excalidraw.com notion.com *.notion.com atlassian.com
+        *.atlassian.com trello.com *.trello.com asana.com *.asana.com gist.github.com
+        linkedin.com *.linkedin.com twitter.com *.twitter.com x.com *.x.com; default-src
+        'none'; child-src 'self' https://accounts.google.com;  frame-ancestors 'none';
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Mon, 12 May 2025 16:20:57 GMT
+      Expires:
+      - Tue, 03 Jul 2001 06:00:00 GMT
+      Last-Modified:
+      - Mon, 12 May 2025 16:20:57 GMT
+      Server:
+      - Jetty(12.0.19)
+      Set-Cookie:
+      - metabase.DEVICE=6674bc6e-fb3a-46bb-88c9-564b656de6ac; HttpOnly; Path=/; Expires=Fri,
+        12 May 2045 16:20:57 GMT; SameSite=Lax
+      Strict-Transport-Security:
+      - max-age=31536000
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-XSS-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

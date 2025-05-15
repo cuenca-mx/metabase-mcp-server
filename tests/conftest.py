@@ -1,30 +1,44 @@
-import json
 import os
-from typing import Generator
+from typing import Any
 
-import boto3
 import pytest
-from fastapi.testclient import TestClient
-from moto import mock_secretsmanager
+
+from mcp_server_metabase.app import Metabase
+
+METABASE_URL = os.environ["METABASE_URL"]
+METABASE_API_KEY = os.environ["METABASE_API_KEY"]
 
 
 @pytest.fixture
-def create_secret():
-    default_config = dict(
-        DATABASE_URI=os.environ['DATABASE_URI'],
-    )
-    with mock_secretsmanager():
-        client = boto3.client('secretsmanager')
-        client.create_secret(
-            Name=os.environ['SECRETS_CONFIG'],
-            SecretString=json.dumps(default_config),
-        )
-        yield
+def metabase_client():
+    return Metabase(base_url=METABASE_URL, api_key=METABASE_API_KEY)
+
+
+@pytest.fixture(scope="session")
+def vcr_config() -> dict[str, Any]:
+    config: dict[str, Any] = {
+        "filter_headers": [
+            ("x-api-key", "DUMMY_AUTHORIZATION"),
+        ]
+    }
+    return config
+
+
+class LifespanContext:
+    def __init__(self, metabase):
+        self.metabase = metabase
+
+
+class RequestContext:
+    def __init__(self, metabase):
+        self.lifespan_context = LifespanContext(metabase)
+
+
+class Context:
+    def __init__(self, metabase):
+        self.request_context = RequestContext(metabase)
 
 
 @pytest.fixture
-def client(create_secret) -> Generator[TestClient, None, None]:
-    from mcp_server_metabase.app import app
-
-    client = TestClient(app)
-    yield client
+def mcp_context(metabase_client):
+    return Context(metabase_client)

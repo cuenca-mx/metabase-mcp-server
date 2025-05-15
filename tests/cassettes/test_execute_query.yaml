@@ -1,0 +1,108 @@
+interactions:
+- request:
+    body: '{"type":"native","native":{"query":"select * from orders where quantity
+      >= 100;","template_tags":{}},"database":1}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '114'
+      content-type:
+      - application/json
+      host:
+      - metaba-metab-juitpiw6882d-1438375467.us-west-2.elb.amazonaws.com
+      user-agent:
+      - python-httpx/0.28.1
+      x-api-key:
+      - DUMMY_AUTHORIZATION
+    method: POST
+    uri: https://metabase.domain.com/api/dataset
+  response:
+    body:
+      string: !!binary |
+        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
+    headers:
+      Cache-Control:
+      - max-age=0, no-cache, must-revalidate, proxy-revalidate
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Security-Policy:
+      - font-src *; script-src 'self' https://maps.google.com https://accounts.google.com    'sha256-9uFLu5CG8mWlvx0LK6lgendCxUX57TuWk3wkgZpBeWU='
+        'sha256-isH538cVBUY8IMlGYGbWtBwr+cGqkc4mN6nLcA7lUjE=' 'sha256-3N2Z+Nu++/yNMVHIl863JigVmt2Nr9gt2doEMJT2Wzk=';
+        style-src 'self' 'nonce-PDavIkjvAR'   https://accounts.google.com; manifest-src
+        'self'; connect-src 'self' https://accounts.google.com metabase.us10.list-manage.com   ;
+        img-src * 'self' data:; frame-src 'self' youtube.com *.youtube.com youtu.be
+        *.youtu.be loom.com *.loom.com vimeo.com *.vimeo.com docs.google.com calendar.google.com
+        airtable.com *.airtable.com typeform.com *.typeform.com canva.com *.canva.com
+        codepen.io *.codepen.io figma.com *.figma.com grafana.com *.grafana.com miro.com
+        *.miro.com excalidraw.com *.excalidraw.com notion.com *.notion.com atlassian.com
+        *.atlassian.com trello.com *.trello.com asana.com *.asana.com gist.github.com
+        linkedin.com *.linkedin.com twitter.com *.twitter.com x.com *.x.com; default-src
+        'none'; child-src 'self' https://accounts.google.com;  frame-ancestors 'none';
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Mon, 12 May 2025 18:45:28 GMT
+      Expires:
+      - Tue, 03 Jul 2001 06:00:00 GMT
+      Last-Modified:
+      - Mon, 12 May 2025 18:45:28 GMT
+      Server:
+      - Jetty(12.0.19)
+      Set-Cookie:
+      - metabase.DEVICE=53d306de-a4a6-44fe-8ed2-88eaf4b3c916; HttpOnly; Path=/; Expires=Fri,
+        12 May 2045 18:45:28 GMT; SameSite=Lax
+      Strict-Transport-Security:
+      - max-age=31536000
+      Transfer-Encoding:
+      - chunked
+      X-Accel-Buffering:
+      - 'no'
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-XSS-Protection:
+      - 1; mode=block
+    status:
+      code: 202
+      message: Accepted
+version: 1

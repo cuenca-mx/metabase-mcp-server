@@ -1,30 +1,154 @@
-import sentry_sdk
-from fast_agave.middlewares import FastAgaveErrorHandler
-from fast_agave_authed.middlewares import AuthedMiddleware
-from fastapi import FastAPI
-from mongoengine import connect
-from sentry_sdk.integrations.asgi import SentryAsgiMiddleware
+import json
+import logging
+import os
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
+from dataclasses import dataclass
+from typing import Any, Mapping
 
-from .config import SENTRY_DSN, get_secrets_config
-from .resources import app as resources
+import httpx
+from mcp.server.fastmcp import Context, FastMCP
+from mcp.types import TextContent
 
-secrets = get_secrets_config()
-sentry_sdk.init(dsn=SENTRY_DSN)
-
-connect(host=secrets['DATABASE_URI'])
-app = FastAPI(title='mcp-server-metabase')
-
-SentryAsgiMiddleware._run_asgi2 = SentryAsgiMiddleware._run_asgi3  # type: ignore  # noqa: E501
-
-app.add_middleware(AuthedMiddleware)
-app.add_middleware(FastAgaveErrorHandler)
-app.add_middleware(SentryAsgiMiddleware)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+)
+logger = logging.getLogger("mcp-server-metabase")
 
 
-app.include_router(resources)
+class Metabase:
+    def __init__(self, base_url: str, api_key: str):
+        self._base_url = base_url.rstrip("/")
+        self._api_key = api_key
+        self._client = httpx.AsyncClient(
+            timeout=300,  # 5 minutes, some queries can take a while
+            headers={"x-api-key": self._api_key},
+        )
+
+    async def make_request(
+        self,
+        method: str,
+        path: str,
+        *,
+        params: Mapping[str, Any] | None = None,
+        json: Mapping[str, Any] | None = None,
+    ) -> httpx.Response:
+        url = f"{self._base_url}/{path.lstrip('/')}"
+        response = await self._client.request(
+            method, url, params=params, json=json
+        )
+        response.raise_for_status()
+        return response
+
+    async def close(self) -> None:
+        await self._client.aclose()
 
 
-@app.on_event('startup')
-async def on_startup() -> None:  # pragma: no cover
-    # Eliminar este método si no hay algo que inicializar
-    ...
+@dataclass
+class AppContext:
+    metabase: Metabase
+
+
+@asynccontextmanager
+async def app_lifespan(server: FastMCP) -> AsyncIterator[AppContext]:
+    METABASE_URL = os.getenv("METABASE_URL")
+    METABASE_API_KEY = os.getenv("METABASE_API_KEY")
+    if not METABASE_URL or not METABASE_API_KEY:
+        logger.error("METABASE_URL and METABASE_API_KEY must be set")
+        raise ValueError("METABASE_URL and METABASE_API_KEY must be set")
+
+    metabase = Metabase(
+        base_url=METABASE_URL,
+        api_key=METABASE_API_KEY,
+    )
+    try:
+        yield AppContext(metabase=metabase)
+    finally:
+        await metabase.close()
+
+
+mcp = FastMCP("mcp-metabase", lifespan=app_lifespan)
+
+
+@mcp.tool(name="list_databases", description="List all databases in Metabase")
+async def list_databases(ctx: Context) -> TextContent:
+    metabase = ctx.request_context.lifespan_context.metabase
+    response = await metabase.make_request("GET", "/api/database")
+    return TextContent(type="text", text=json.dumps(response.json(), indent=2))
+
+
+@mcp.tool(name="list_cards", description="List all cards in Metabase")
+async def list_cards(ctx: Context) -> TextContent:
+    """Since there are many cards, the response is limited to only bookmarked/favorite cards"""
+    metabase = ctx.request_context.lifespan_context.metabase
+    response = await metabase.make_request("GET", "/api/card/?f=bookmarked")
+    return TextContent(type="text", text=json.dumps(response.json(), indent=2))
+
+
+@mcp.tool(
+    name="execute_card", description="Run the query associated with a Card."
+)
+async def execute_card(
+    ctx: Context, card_id: int, parameters: list[dict[str, Any]]
+) -> TextContent:
+    metabase = ctx.request_context.lifespan_context.metabase
+    response = await metabase.make_request(
+        "POST",
+        f"/api/card/{card_id}/query",
+        json={"parameters": parameters},
+    )
+    return TextContent(type="text", text=json.dumps(response.json(), indent=2))
+
+
+@mcp.tool(
+    name="execute_query",
+    description="Execute a query and retrieve the results in the usual format.",
+)
+async def execute_query(
+    ctx: Context, query: str, database_id: int
+) -> TextContent:
+    metabase = ctx.request_context.lifespan_context.metabase
+    response = await metabase.make_request(
+        "POST",
+        "/api/dataset",
+        json={
+            "type": "native",
+            "native": {"query": query, "template_tags": {}},
+            "database": database_id,
+        },
+    )
+    return TextContent(type="text", text=json.dumps(response.json(), indent=2))
+
+
+@mcp.tool(
+    name="create_card",
+    description="Create a new Card. Card type can be question, metric, or model.",
+)
+async def create_card(
+    ctx: Context,
+    name: str,
+    description: str,
+    query: str,
+    collection_id: int,
+    database_id: int,
+) -> TextContent:
+    metabase = ctx.request_context.lifespan_context.metabase
+    response = await metabase.make_request(
+        "POST",
+        "/api/card",
+        json={
+            "name": name,
+            "display": "table",
+            "visualization_settings": {},
+            "dataset_query": {
+                "database": database_id,
+                "native": {"query": query, "template_tags": {}},
+                "type": "native",
+            },
+            "description": description,
+            "collection_id": collection_id,
+            "type": "question",
+        },
+    )
+    return TextContent(type="text", text=json.dumps(response.json(), indent=2))
