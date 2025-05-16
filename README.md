@@ -15,10 +15,65 @@ This project implements an MCP server to interact with the [Metabase API](https:
 - Python 3.12+
 - [uv](https://docs.astral.sh/uv/getting-started/installation/)
 
-## Environment Variables
+## Installation
 
-Make sure to configure the environment variables:
+1. Clone the repository:
+```bash
+git clone https://github.com/cuenca-mx/mcp-server-metabase.git
+cd mcp-server-metabase
+```
+
+2. Configure your AI assistant client ([Claude](https://modelcontextprotocol.io/quickstart/user), [Cursor](https://docs.cursor.com/context/model-context-protocol), etc.) by adding the following configuration:
+
+```json
+{
+    "mcpServers": {
+        "metabase": {
+            "command": "uv",
+            "args": [
+                "--directory",
+                "/ABSOLUTE/PATH/TO/PARENT/FOLDER/mcp_server_metabase",
+                "run",
+                "app.py"
+            ],
+            "env": {
+                "METABASE_URL": "https://metabase.domain.com/",
+                "METABASE_API_KEY": "your-secret-api-key"
+            }
+        }
+    }
+}
+```
+
+## Development Setup
+
+This project uses a Makefile to simplify development tasks:
+
+```bash
+make venv && source .venv/bin/activate
+make install-test
+```
+
+### Environment Variables
+
+Configure required environment variables:
 
 ```bash
 export $(<env.template)
+```
+
+### Running Tests
+
+The project uses `pytest` for unit testing:
+
+```bash
+pytest
+```
+
+### Debugging with MCP Inspector
+
+Use the [MCP Inspector](https://modelcontextprotocol.io/docs/tools/inspector) for testing and debugging:
+
+```bash
+make dev
 ```
