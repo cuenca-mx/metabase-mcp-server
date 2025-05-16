@@ -78,6 +78,15 @@ async def list_databases(ctx: Context) -> TextContent:
     return TextContent(type="text", text=json.dumps(response.json(), indent=2))
 
 
+@mcp.tool(
+    name="list_collections", description="List all collections in Metabase"
+)
+async def list_collections(ctx: Context) -> TextContent:
+    metabase = ctx.request_context.lifespan_context.metabase
+    response = await metabase.make_request("GET", "api/collection")
+    return TextContent(type="text", text=json.dumps(response.json(), indent=2))
+
+
 @mcp.tool(name="list_cards", description="List all cards in Metabase")
 async def list_cards(ctx: Context) -> TextContent:
     """Since there are many cards, the response is limited to only bookmarked/favorite cards"""
@@ -152,3 +161,23 @@ async def create_card(
         },
     )
     return TextContent(type="text", text=json.dumps(response.json(), indent=2))
+
+
+@mcp.tool(
+    name="create_bookmark",
+    description="Create a new bookmark for user.",
+)
+async def create_bookmark(
+    ctx: Context,
+    card_id: int,
+) -> TextContent:
+    metabase = ctx.request_context.lifespan_context.metabase
+    response = await metabase.make_request(
+        "POST",
+        f"/api/bookmark/card/{card_id}",
+    )
+    return TextContent(type="text", text=json.dumps(response.json(), indent=2))
+
+
+if __name__ == "__main__":  # pragma: no cover
+    mcp.run()

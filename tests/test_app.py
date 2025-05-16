@@ -6,10 +6,12 @@ from mcp.server.fastmcp import FastMCP
 from mcp_server_metabase.app import (
     AppContext,
     app_lifespan,
+    create_bookmark,
     create_card,
     execute_card,
     execute_query,
     list_cards,
+    list_collections,
     list_databases,
 )
 
@@ -29,6 +31,13 @@ async def test_list_databases(mcp_context):
     assert db["name"] == "Sample Database"
     assert db["engine"] == "h2"
     assert db["id"] == 1
+
+
+@pytest.mark.vcr
+async def test_list_collections(mcp_context):
+    response = await list_collections(mcp_context)
+    data = json.loads(response.text)
+    assert len(data) > 0
 
 
 @pytest.mark.vcr
@@ -98,6 +107,16 @@ async def test_create_card(mcp_context):
         data["dataset_query"]["native"]["query"]
         == "select * from orders where quantity >= 100"
     )
+
+
+@pytest.mark.vcr
+async def test_create_bookmark(mcp_context):
+    response = await create_bookmark(
+        mcp_context,
+        card_id=4,
+    )
+    data = json.loads(response.text)
+    assert "created_at" in data
 
 
 async def test_app_lifespan_real_instance():
