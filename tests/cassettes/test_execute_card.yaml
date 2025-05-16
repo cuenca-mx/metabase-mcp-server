@@ -13,7 +13,7 @@ interactions:
       content-type:
       - application/json
       host:
-      - metaba-metab-juitpiw6882d-1438375467.us-west-2.elb.amazonaws.com
+      - metabase.domain.com
       user-agent:
       - python-httpx/0.28.1
       x-api-key:

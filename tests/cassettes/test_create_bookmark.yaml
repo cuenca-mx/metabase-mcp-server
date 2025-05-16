@@ -11,7 +11,7 @@ interactions:
       content-length:
       - '0'
       host:
-      - metaba-metab-ylzf9pmcjjc7-1335119001.us-west-2.elb.amazonaws.com
+      - metabase.domain.com
       user-agent:
       - python-httpx/0.28.1
       x-api-key:
