@@ -9,6 +9,8 @@ This project implements an MCP server to interact with the [Metabase API](https:
 - 📊 Execute queries on cards
 - 🧾 Run arbitrary queries
 - 📝 Create new cards
+- 🔖 Create bookmark
+- 📁 List collections
 
 ## Requirements
 
