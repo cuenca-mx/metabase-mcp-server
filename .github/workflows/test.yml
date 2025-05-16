@@ -16,17 +16,14 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: 3.13
-      - name: Install UV
+      - name: Set up and run lint
         run: |
           curl -LsSf https://astral.sh/uv/install.sh | sh
           make venv
           source .venv/bin/activate
-      - name: Install dependencies
-        run: |
           pip config set global.extra-index-url https://$PYPI_USERNAME:$PYPI_PASSWORD@pypi.cuenca.io:8081
           make install-test
-      - name: Lint
-        run: make lint
+          make lint
 
   pytest:
     runs-on: ubuntu-latest
@@ -36,17 +33,13 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: 3.13
-      - name: Install UV
+      - name: Set up and run tests
         run: |
           curl -LsSf https://astral.sh/uv/install.sh | sh
           make venv
           source .venv/bin/activate
-      - name: Install dependencies
-        run: |
-            pip config set global.extra-index-url https://$PYPI_USERNAME:$PYPI_PASSWORD@pypi.cuenca.io:8081
-            make install-test
-      - name: Run tests
-        run: |
+          pip config set global.extra-index-url https://$PYPI_USERNAME:$PYPI_PASSWORD@pypi.cuenca.io:8081
+          make install-test
           export $(<env.template)
           pytest
 
@@ -58,17 +51,13 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: 3.13
-      - name: Install UV
+      - name: Set up and generate coverage
         run: |
           curl -LsSf https://astral.sh/uv/install.sh | sh
           make venv
           source .venv/bin/activate
-      - name: Install dependencies
-        run: |
           pip config set global.extra-index-url https://$PYPI_USERNAME:$PYPI_PASSWORD@pypi.cuenca.io:8081
           make install-test
-      - name: Generate coverage report
-        run: |
           export $(<env.template)
           pytest --cov-report=xml
       - name: Upload coverage to Codecov
