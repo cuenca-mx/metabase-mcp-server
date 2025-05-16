@@ -19,6 +19,8 @@ jobs:
       - name: Install UV
         run: |
           curl -LsSf https://astral.sh/uv/install.sh | sh
+          make venv
+          source .venv/bin/activate
       - name: Install dependencies
         run: |
           pip config set global.extra-index-url https://$PYPI_USERNAME:$PYPI_PASSWORD@pypi.cuenca.io:8081
@@ -35,7 +37,10 @@ jobs:
         with:
           python-version: 3.13
       - name: Install UV
-        run: pip install uv
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          make venv
+          source .venv/bin/activate
       - name: Install dependencies
         run: |
             pip config set global.extra-index-url https://$PYPI_USERNAME:$PYPI_PASSWORD@pypi.cuenca.io:8081
@@ -54,7 +59,10 @@ jobs:
         with:
           python-version: 3.13
       - name: Install UV
-        run: pip install uv
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          make venv
+          source .venv/bin/activate
       - name: Install dependencies
         run: |
           pip config set global.extra-index-url https://$PYPI_USERNAME:$PYPI_PASSWORD@pypi.cuenca.io:8081
