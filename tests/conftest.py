@@ -9,9 +9,13 @@ METABASE_URL = os.environ["METABASE_URL"]
 METABASE_API_KEY = os.environ["METABASE_API_KEY"]
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def metabase_client():
-    return Metabase(base_url=METABASE_URL, api_key=METABASE_API_KEY)
+    client = Metabase(base_url=METABASE_URL, api_key=METABASE_API_KEY)
+    try:
+        yield client
+    finally:
+        client.close()
 
 
 @pytest.fixture(scope="session")
