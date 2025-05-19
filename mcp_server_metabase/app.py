@@ -1,7 +1,7 @@
 import json
 import logging
 import os
-from collections.abc import AsyncIterator, Mapping
+from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from typing import Any
@@ -31,13 +31,10 @@ class Metabase:
         method: str,
         path: str,
         *,
-        params: Mapping[str, Any] | None = None,
-        json: Mapping[str, Any] | None = None,
+        json: dict[str, Any] | None = None,
     ) -> httpx.Response:
         url = f"{self._base_url}/{path.lstrip('/')}"
-        response = await self._client.request(
-            method, url, params=params, json=json
-        )
+        response = await self._client.request(method, url, json=json)
         response.raise_for_status()
         return response
 
