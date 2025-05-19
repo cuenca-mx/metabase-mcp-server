@@ -7,31 +7,25 @@ PROJECT = mcp_server_metabase
 .PHONY: all
 all: test
 
-.PHONY: venv
-venv:
-	uv venv
-
 .PHONY: install
-install:
-	uv pip install
+install: sync
 
-.PHONY: install-test
-install-test:
-	uv pip install -e ".[test]"
+sync:
+	uv sync --extra test
 
 .PHONY: test
-test: clean install-test lint
+test: clean install lint
 	pytest
 
 .PHONY: format
 format:
-	uv run ruff check --fix $(PROJECT) tests
-	uv run ruff format $(PROJECT) tests
+	uv run ruff check --fix .
+	uv run ruff format .
 
 .PHONY: lint
 lint:
-	uv run ruff check $(PROJECT) tests
-	uv run ruff format --check $(PROJECT) tests
+	uv run ruff check .
+	uv run ruff format --check .
 	uv run mypy $(PROJECT) tests
 
 .PHONY: clean

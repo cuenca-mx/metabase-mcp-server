@@ -1,5 +1,5 @@
 line-length = 79
-target-version = "py311"
+target-version = "py312"
 indent-width = 4
 exclude = [
     ".git",

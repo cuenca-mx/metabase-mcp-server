@@ -5,17 +5,17 @@ description = "A Model Context Protocol server that enables interaction with Met
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "mcp[cli]>=1.6.0",
+    "mcp[cli]>=1.9.0",
 ]
 
 [project.optional-dependencies]
 test = [
-    "mypy>=1.0.0",
-    "pytest>=8.0.0",
-    "pytest-asyncio>=0.25.0",
-    "pytest-cov>=6.1.0",
-    "pytest-vcr>=1.0.0",
-    "ruff>=0.11.0",
+    "mypy>=1.15.0",
+    "pytest>=8.3.5",
+    "pytest-asyncio>=0.26.0",
+    "pytest-cov>=6.1.1",
+    "pytest-vcr>=1.0.2",
+    "ruff>=0.11.10",
 ]
 
 [tool.pytest.ini_options]
