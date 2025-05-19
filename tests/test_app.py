@@ -1,7 +1,6 @@
 import json
 
 import pytest
-from conftest import Context
 
 from mcp_server_metabase.app import (
     AppContext,
@@ -15,6 +14,8 @@ from mcp_server_metabase.app import (
     list_collections,
     list_databases,
 )
+
+from .conftest import Context
 
 
 @pytest.mark.vcr
