@@ -1,6 +1,7 @@
 import json
 
 import pytest
+from mcp.server.fastmcp import FastMCP
 
 from mcp_server_metabase.app import (
     AppContext,
@@ -122,7 +123,8 @@ async def test_create_bookmark(mcp_context: Context) -> None:
 
 
 async def test_app_lifespan_real_instance() -> None:
-    async with app_lifespan() as ctx:
+    server = FastMCP("test")
+    async with app_lifespan(server) as ctx:
         assert isinstance(ctx, AppContext)
         assert ctx.metabase is not None
         assert ctx.metabase._base_url == "https://metabase.domain.com"
@@ -134,8 +136,9 @@ async def test_app_lifespan_missing_environment_variables(
 ) -> None:
     monkeypatch.delenv("METABASE_URL", raising=False)
     monkeypatch.delenv("METABASE_API_KEY", raising=False)
+    server = FastMCP("test")
     with pytest.raises(
         ValueError, match="METABASE_URL and METABASE_API_KEY must be set"
     ):
-        async with app_lifespan():
+        async with app_lifespan(server):
             pass

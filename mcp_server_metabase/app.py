@@ -51,7 +51,7 @@ class AppContext:
 
 
 @asynccontextmanager
-async def app_lifespan() -> AsyncIterator[AppContext]:
+async def app_lifespan(_server: FastMCP) -> AsyncIterator[AppContext]:
     metabase_url = os.getenv("METABASE_URL")
     metabase_api_key = os.getenv("METABASE_API_KEY")
     if not metabase_url or not metabase_api_key:
