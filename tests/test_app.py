@@ -1,10 +1,11 @@
 import json
 
 import pytest
-from mcp.server.fastmcp import FastMCP
+from conftest import Context
 
 from mcp_server_metabase.app import (
     AppContext,
+    Metabase,
     app_lifespan,
     create_bookmark,
     create_card,
@@ -17,13 +18,13 @@ from mcp_server_metabase.app import (
 
 
 @pytest.mark.vcr
-async def test_make_request_success(metabase_client):
+async def test_make_request_success(metabase_client: Metabase) -> None:
     response = await metabase_client.make_request("GET", "/api/card/?f=all")
     assert response.status_code == 200
 
 
 @pytest.mark.vcr
-async def test_list_databases(mcp_context):
+async def test_list_databases(mcp_context: Context) -> None:
     response = await list_databases(mcp_context)
     data = json.loads(response.text)
     assert "data" in data
@@ -34,14 +35,14 @@ async def test_list_databases(mcp_context):
 
 
 @pytest.mark.vcr
-async def test_list_collections(mcp_context):
+async def test_list_collections(mcp_context: Context) -> None:
     response = await list_collections(mcp_context)
     data = json.loads(response.text)
     assert len(data) > 0
 
 
 @pytest.mark.vcr
-async def test_list_cards(mcp_context):
+async def test_list_cards(mcp_context: Context) -> None:
     response = await list_cards(mcp_context)
     data = json.loads(response.text)
     card = data[0]
@@ -52,7 +53,7 @@ async def test_list_cards(mcp_context):
 
 
 @pytest.mark.vcr
-async def test_execute_card(mcp_context):
+async def test_execute_card(mcp_context: Context) -> None:
     response = await execute_card(
         mcp_context,
         card_id=2,
@@ -71,7 +72,7 @@ async def test_execute_card(mcp_context):
 
 
 @pytest.mark.vcr
-async def test_execute_query(mcp_context):
+async def test_execute_query(mcp_context: Context) -> None:
     response = await execute_query(
         mcp_context,
         query="select * from orders where quantity >= 100;",
@@ -84,7 +85,7 @@ async def test_execute_query(mcp_context):
 
 
 @pytest.mark.vcr
-async def test_create_card(mcp_context):
+async def test_create_card(mcp_context: Context) -> None:
     response = await create_card(
         mcp_context,
         name="My Card",
@@ -110,7 +111,7 @@ async def test_create_card(mcp_context):
 
 
 @pytest.mark.vcr
-async def test_create_bookmark(mcp_context):
+async def test_create_bookmark(mcp_context: Context) -> None:
     response = await create_bookmark(
         mcp_context,
         card_id=4,
@@ -119,21 +120,21 @@ async def test_create_bookmark(mcp_context):
     assert "created_at" in data
 
 
-async def test_app_lifespan_real_instance():
-    server = FastMCP("test")
-    async with app_lifespan(server) as ctx:
+async def test_app_lifespan_real_instance() -> None:
+    async with app_lifespan() as ctx:
         assert isinstance(ctx, AppContext)
         assert ctx.metabase is not None
         assert ctx.metabase._base_url == "https://metabase.domain.com"
         await ctx.metabase.close()
 
 
-async def test_app_lifespan_missing_environment_variables(monkeypatch):
+async def test_app_lifespan_missing_environment_variables(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     monkeypatch.delenv("METABASE_URL", raising=False)
     monkeypatch.delenv("METABASE_API_KEY", raising=False)
-    server = FastMCP("test")
     with pytest.raises(
         ValueError, match="METABASE_URL and METABASE_API_KEY must be set"
     ):
-        async with app_lifespan(server):
+        async with app_lifespan():
             pass

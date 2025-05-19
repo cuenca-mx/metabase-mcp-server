@@ -1,10 +1,10 @@
 import json
 import logging
 import os
-from collections.abc import AsyncIterator
+from collections.abc import AsyncIterator, Mapping
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
-from typing import Any, Mapping
+from typing import Any
 
 import httpx
 from mcp.server.fastmcp import Context, FastMCP
@@ -18,7 +18,7 @@ logger = logging.getLogger("mcp-server-metabase")
 
 
 class Metabase:
-    def __init__(self, base_url: str, api_key: str):
+    def __init__(self, base_url: str, api_key: str) -> None:
         self._base_url = base_url.rstrip("/")
         self._api_key = api_key
         self._client = httpx.AsyncClient(
@@ -51,16 +51,16 @@ class AppContext:
 
 
 @asynccontextmanager
-async def app_lifespan(server: FastMCP) -> AsyncIterator[AppContext]:
-    METABASE_URL = os.getenv("METABASE_URL")
-    METABASE_API_KEY = os.getenv("METABASE_API_KEY")
-    if not METABASE_URL or not METABASE_API_KEY:
+async def app_lifespan() -> AsyncIterator[AppContext]:
+    metabase_url = os.getenv("METABASE_URL")
+    metabase_api_key = os.getenv("METABASE_API_KEY")
+    if not metabase_url or not metabase_api_key:
         logger.error("METABASE_URL and METABASE_API_KEY must be set")
         raise ValueError("METABASE_URL and METABASE_API_KEY must be set")
 
     metabase = Metabase(
-        base_url=METABASE_URL,
-        api_key=METABASE_API_KEY,
+        base_url=metabase_url,
+        api_key=metabase_api_key,
     )
     try:
         yield AppContext(metabase=metabase)
@@ -89,7 +89,8 @@ async def list_collections(ctx: Context) -> TextContent:
 
 @mcp.tool(name="list_cards", description="List all cards in Metabase")
 async def list_cards(ctx: Context) -> TextContent:
-    """Since there are many cards, the response is limited to only bookmarked/favorite cards"""
+    """Since there are many cards, the response is limited to only
+    bookmarked/favorite cards"""
     metabase = ctx.request_context.lifespan_context.metabase
     response = await metabase.make_request("GET", "/api/card/?f=bookmarked")
     return TextContent(type="text", text=json.dumps(response.json(), indent=2))
@@ -112,7 +113,9 @@ async def execute_card(
 
 @mcp.tool(
     name="execute_query",
-    description="Execute a query and retrieve the results in the usual format.",
+    description=(
+        "Execute a query and retrieve the results in the usual format."
+    ),
 )
 async def execute_query(
     ctx: Context, query: str, database_id: int
@@ -132,7 +135,9 @@ async def execute_query(
 
 @mcp.tool(
     name="create_card",
-    description="Create a new Card. Card type can be question, metric, or model.",
+    description=(
+        "Create a new Card. Card type can be question, metric, or model."
+    ),
 )
 async def create_card(
     ctx: Context,

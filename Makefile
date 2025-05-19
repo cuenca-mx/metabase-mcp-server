@@ -25,14 +25,13 @@ test: clean install-test lint
 
 .PHONY: format
 format:
-	uv run isort $(PROJECT) tests
-	uv run ruff format $(PROJECT) tests
 	uv run ruff check --fix $(PROJECT) tests
+	uv run ruff format $(PROJECT) tests
 
 .PHONY: lint
 lint:
-	uv run ruff format --check $(PROJECT) tests
 	uv run ruff check $(PROJECT) tests
+	uv run ruff format --check $(PROJECT) tests
 	uv run mypy $(PROJECT) tests
 
 .PHONY: clean
