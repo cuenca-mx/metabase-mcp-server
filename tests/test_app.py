@@ -122,6 +122,26 @@ async def test_create_bookmark(mcp_context: Context) -> None:
     assert "created_at" in data
 
 
+@pytest.mark.vcr
+async def test_create_bookmark_already_exists(mcp_context: Context) -> None:
+    response = await create_bookmark(
+        mcp_context,
+        card_id=2600,
+    )
+    data = json.loads(response.text)
+    assert data["error"] == "Bookmark already exists"
+
+
+@pytest.mark.vcr
+async def test_create_bookmark_card_not_found(mcp_context: Context) -> None:
+    response = await create_bookmark(
+        mcp_context,
+        card_id=4444,
+    )
+    data = json.loads(response.text)
+    assert data["error"] == "Card not found"
+
+
 async def test_app_lifespan_real_instance() -> None:
     server = FastMCP("test")
     async with app_lifespan(server) as ctx:

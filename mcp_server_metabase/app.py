@@ -177,10 +177,22 @@ async def create_bookmark(
     card_id: int,
 ) -> TextContent:
     metabase = ctx.request_context.lifespan_context.metabase
-    response = await metabase.make_request(
-        "POST",
-        f"/api/bookmark/card/{card_id}",
-    )
+    try:
+        response = await metabase.make_request(
+            "POST",
+            f"/api/bookmark/card/{card_id}",
+        )
+    except httpx.HTTPStatusError as e:
+        if e.response.status_code == 400:
+            return TextContent(
+                type="text",
+                text=json.dumps({"error": "Bookmark already exists"}),
+            )
+        elif e.response.status_code == 404:
+            return TextContent(
+                type="text",
+                text=json.dumps({"error": "Card not found"}),
+            )
     return TextContent(type="text", text=json.dumps(response.json(), indent=2))
 
 

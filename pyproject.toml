@@ -22,11 +22,6 @@ test = [
 addopts = "-p no:warnings -v --cov-report term-missing --cov=mcp_server_metabase"
 asyncio_mode = "auto"
 
-[tool.coverage.run]
-omit = [
-    "mcp_server_metabase/__main__.py"
-]
-
 [tool.mypy]
 ignore_missing_imports = true
 plugins = "pydantic.mypy"
