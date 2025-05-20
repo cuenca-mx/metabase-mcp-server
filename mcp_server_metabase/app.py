@@ -1,6 +1,5 @@
 import json
 import logging
-import os
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
@@ -9,6 +8,8 @@ from typing import Any
 import httpx
 from mcp.server.fastmcp import Context, FastMCP
 from mcp.types import TextContent
+
+from .config import config
 
 logging.basicConfig(
     level=logging.INFO,
@@ -49,15 +50,9 @@ class AppContext:
 
 @asynccontextmanager
 async def app_lifespan(_server: FastMCP) -> AsyncIterator[AppContext]:
-    metabase_url = os.getenv("METABASE_URL")
-    metabase_api_key = os.getenv("METABASE_API_KEY")
-    if not metabase_url or not metabase_api_key:
-        logger.error("METABASE_URL and METABASE_API_KEY must be set")
-        raise ValueError("METABASE_URL and METABASE_API_KEY must be set")
-
     metabase = Metabase(
-        base_url=metabase_url,
-        api_key=metabase_api_key,
+        base_url=config.metabase_url,
+        api_key=config.metabase_api_key,
     )
     try:
         yield AppContext(metabase=metabase)
