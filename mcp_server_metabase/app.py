@@ -20,7 +20,7 @@ logger = logging.getLogger("mcp-server-metabase")
 class Config(BaseSettings):
     metabase_url: str
     metabase_api_key: str
-    timeout: int
+    timeout: int = 30
 
 
 config = Config()
@@ -38,10 +38,8 @@ async def app_lifespan(_server: FastMCP) -> AsyncIterator[AppContext]:
         timeout=config.timeout,
         headers={"x-api-key": config.metabase_api_key},
     )
-    try:
+    async with client:
         yield AppContext(client=client)
-    finally:
-        await client.aclose()
 
 
 mcp = FastMCP(
