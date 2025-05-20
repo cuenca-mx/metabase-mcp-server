@@ -44,7 +44,18 @@ async def app_lifespan(_server: FastMCP) -> AsyncIterator[AppContext]:
         await client.aclose()
 
 
-mcp = FastMCP("mcp-metabase", lifespan=app_lifespan)
+mcp = FastMCP(
+    name="mcp-metabase",
+    instructions="""
+        This server provides a set of tools to interact with Metabase,
+        a business intelligence and analytics platform.
+    """,
+    lifespan=app_lifespan,
+    dependencies=[
+        "httpx",
+        "pydantic-settings",
+    ],
+)
 
 
 @mcp.tool(name="list_databases", description="List all databases in Metabase")

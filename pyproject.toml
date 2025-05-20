@@ -5,7 +5,7 @@ description = "A Model Context Protocol server that enables interaction with Met
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "mcp[cli]>=1.9.0",
+    "fastmcp>=2.3.4",
 ]
 
 [project.optional-dependencies]

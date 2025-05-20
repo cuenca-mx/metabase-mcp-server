@@ -41,4 +41,4 @@ clean:
 
 .PHONY: dev
 dev:
-	mcp dev mcp_server_metabase/app.py
+	fastmcp dev mcp_server_metabase/app.py
