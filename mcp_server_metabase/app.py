@@ -6,10 +6,9 @@ from dataclasses import dataclass
 from typing import Any
 
 import httpx
-from mcp.server.fastmcp import Context, FastMCP
+from fastmcp import Context, FastMCP
 from mcp.types import TextContent
-
-from .config import config
+from pydantic_settings import BaseSettings
 
 logging.basicConfig(
     level=logging.INFO,
@@ -18,46 +17,31 @@ logging.basicConfig(
 logger = logging.getLogger("mcp-server-metabase")
 
 
-class Metabase:
-    def __init__(self, base_url: str, api_key: str) -> None:
-        self._base_url = base_url.rstrip("/")
-        self._api_key = api_key
-        self._client = httpx.AsyncClient(
-            timeout=300,  # 5 minutes, some queries can take a while
-            headers={"x-api-key": self._api_key},
-        )
+class Config(BaseSettings):
+    metabase_url: str
+    metabase_api_key: str
+    timeout: int
 
-    async def make_request(
-        self,
-        method: str,
-        path: str,
-        *,
-        json: dict[str, Any] | None = None,
-    ) -> httpx.Response:
-        url = f"{self._base_url}/{path.lstrip('/')}"
-        response = await self._client.request(method, url, json=json)
-        response.raise_for_status()
-        return response
 
-    async def close(self) -> None:
-        await self._client.aclose()
+config = Config()
 
 
 @dataclass
 class AppContext:
-    metabase: Metabase
+    client: httpx.AsyncClient
 
 
 @asynccontextmanager
 async def app_lifespan(_server: FastMCP) -> AsyncIterator[AppContext]:
-    metabase = Metabase(
-        base_url=config.metabase_url,
-        api_key=config.metabase_api_key,
+    client = httpx.AsyncClient(
+        base_url=config.metabase_url.rstrip("/"),
+        timeout=config.timeout,
+        headers={"x-api-key": config.metabase_api_key},
     )
     try:
-        yield AppContext(metabase=metabase)
+        yield AppContext(client=client)
     finally:
-        await metabase.close()
+        await client.aclose()
 
 
 mcp = FastMCP("mcp-metabase", lifespan=app_lifespan)
@@ -65,8 +49,8 @@ mcp = FastMCP("mcp-metabase", lifespan=app_lifespan)
 
 @mcp.tool(name="list_databases", description="List all databases in Metabase")
 async def list_databases(ctx: Context) -> TextContent:
-    metabase = ctx.request_context.lifespan_context.metabase
-    response = await metabase.make_request("GET", "/api/database")
+    client = ctx.request_context.lifespan_context.client
+    response = await client.get("/api/database")
     return TextContent(type="text", text=json.dumps(response.json(), indent=2))
 
 
@@ -74,8 +58,8 @@ async def list_databases(ctx: Context) -> TextContent:
     name="list_collections", description="List all collections in Metabase"
 )
 async def list_collections(ctx: Context) -> TextContent:
-    metabase = ctx.request_context.lifespan_context.metabase
-    response = await metabase.make_request("GET", "api/collection")
+    client = ctx.request_context.lifespan_context.client
+    response = await client.get("/api/collection")
     return TextContent(type="text", text=json.dumps(response.json(), indent=2))
 
 
@@ -83,8 +67,8 @@ async def list_collections(ctx: Context) -> TextContent:
 async def list_cards(ctx: Context) -> TextContent:
     """Since there are many cards, the response is limited to only
     bookmarked/favorite cards"""
-    metabase = ctx.request_context.lifespan_context.metabase
-    response = await metabase.make_request("GET", "/api/card/?f=bookmarked")
+    client = ctx.request_context.lifespan_context.client
+    response = await client.get("/api/card/?f=bookmarked")
     return TextContent(type="text", text=json.dumps(response.json(), indent=2))
 
 
@@ -94,9 +78,8 @@ async def list_cards(ctx: Context) -> TextContent:
 async def execute_card(
     ctx: Context, card_id: int, parameters: list[dict[str, Any]]
 ) -> TextContent:
-    metabase = ctx.request_context.lifespan_context.metabase
-    response = await metabase.make_request(
-        "POST",
+    client = ctx.request_context.lifespan_context.client
+    response = await client.post(
         f"/api/card/{card_id}/query",
         json={"parameters": parameters},
     )
@@ -112,9 +95,8 @@ async def execute_card(
 async def execute_query(
     ctx: Context, query: str, database_id: int
 ) -> TextContent:
-    metabase = ctx.request_context.lifespan_context.metabase
-    response = await metabase.make_request(
-        "POST",
+    client = ctx.request_context.lifespan_context.client
+    response = await client.post(
         "/api/dataset",
         json={
             "type": "native",
@@ -139,9 +121,8 @@ async def create_card(
     collection_id: int,
     database_id: int,
 ) -> TextContent:
-    metabase = ctx.request_context.lifespan_context.metabase
-    response = await metabase.make_request(
-        "POST",
+    client = ctx.request_context.lifespan_context.client
+    response = await client.post(
         "/api/card",
         json={
             "name": name,
@@ -168,12 +149,10 @@ async def create_bookmark(
     ctx: Context,
     card_id: int,
 ) -> TextContent:
-    metabase = ctx.request_context.lifespan_context.metabase
+    client = ctx.request_context.lifespan_context.client
     try:
-        response = await metabase.make_request(
-            "POST",
-            f"/api/bookmark/card/{card_id}",
-        )
+        response = await client.post(f"/api/bookmark/card/{card_id}")
+        response.raise_for_status()
     except httpx.HTTPStatusError as e:
         if e.response.status_code == 400:
             return TextContent(
