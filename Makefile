@@ -1,7 +1,7 @@
 SHELL := bash
 PATH := ./venv/bin:${PATH}
 PYTHON = python3.13
-PROJECT = mcp_server_metabase
+PROJECT = metabase_mcp_server
 
 
 .PHONY: all
@@ -41,4 +41,4 @@ clean:
 
 .PHONY: dev
 dev:
-	fastmcp dev mcp_server_metabase/app.py
+	fastmcp dev $(PROJECT)/app.py

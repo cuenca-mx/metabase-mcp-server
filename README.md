@@ -21,8 +21,8 @@ This project implements an MCP server to interact with the [Metabase API](https:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/cuenca-mx/mcp-server-metabase.git
-cd mcp-server-metabase
+git clone https://github.com/cuenca-mx/metabase-mcp-server.git
+cd metabase-mcp-server
 ```
 
 2. Configure your AI assistant client ([Claude](https://modelcontextprotocol.io/quickstart/user), [Cursor](https://docs.cursor.com/context/model-context-protocol), etc.) by adding the following configuration:
@@ -34,7 +34,7 @@ cd mcp-server-metabase
             "command": "uv",
             "args": [
                 "--directory",
-                "/ABSOLUTE/PATH/TO/PARENT/FOLDER/mcp_server_metabase",
+                "/ABSOLUTE/PATH/TO/PARENT/FOLDER/metabase_mcp_server",
                 "run",
                 "app.py"
             ],
@@ -52,8 +52,7 @@ cd mcp-server-metabase
 This project uses a Makefile to simplify development tasks:
 
 ```bash
-make venv && source .venv/bin/activate
-make install-test
+make install
 ```
 
 ### Environment Variables

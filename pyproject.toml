@@ -1,5 +1,5 @@
 [project]
-name = "mcp-server-metabase"
+name = "metabase-mcp-server"
 version = "0.1.0"
 description = "A Model Context Protocol server that enables interaction with Metabase via LLMs"
 readme = "README.md"
@@ -19,7 +19,7 @@ test = [
 ]
 
 [tool.pytest.ini_options]
-addopts = "-p no:warnings -v --cov-report term-missing --cov=mcp_server_metabase"
+addopts = "-p no:warnings -v --cov-report term-missing --cov=metabase_mcp_server"
 asyncio_mode = "auto"
 
 [tool.mypy]
