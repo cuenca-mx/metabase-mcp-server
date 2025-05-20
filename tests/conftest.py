@@ -4,7 +4,7 @@ import pytest
 import pytest_asyncio
 from fastmcp import Client
 
-from mcp_server_metabase.app import mcp
+from metabase_mcp_server.app import mcp
 
 
 @pytest_asyncio.fixture(scope="function")
