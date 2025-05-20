@@ -15,7 +15,7 @@ sync:
 
 .PHONY: test
 test: clean install lint
-	pytest
+	uv run pytest
 
 .PHONY: format
 format:
