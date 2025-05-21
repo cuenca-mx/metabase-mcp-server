@@ -3,7 +3,9 @@ import logging
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
+from datetime import datetime
 from typing import Any
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 import httpx
 from fastmcp import Context, FastMCP
@@ -14,7 +16,7 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
 )
-logger = logging.getLogger("mcp-server-metabase")
+logger = logging.getLogger("metabase-mcp-server")
 
 
 class Config(BaseSettings):
@@ -174,6 +176,40 @@ async def create_bookmark(
                 text=json.dumps({"error": "Card not found"}),
             )
     return TextContent(type="text", text=json.dumps(response.json(), indent=2))
+
+
+@mcp.tool(
+    name="convert_timezone",
+    description="Convert dates and times from any timezone to UTC",
+)
+async def convert_timezone(
+    _ctx: Context,
+    datetime_str: str,
+    source_timezone: str,
+) -> TextContent:
+    try:
+        dt = datetime.fromisoformat(datetime_str.replace("Z", "+00:00"))
+        dt = dt.replace(tzinfo=ZoneInfo(source_timezone))
+        utc_dt = dt.astimezone(ZoneInfo("UTC"))
+
+        return TextContent(
+            type="text",
+            text=json.dumps(
+                {
+                    "original": datetime_str,
+                    "timezone": source_timezone,
+                    "utc": utc_dt.isoformat(),
+                },
+                indent=2,
+            ),
+        )
+    except (ValueError, ZoneInfoNotFoundError) as e:
+        return TextContent(
+            type="text",
+            text=json.dumps(
+                {"error": f"Failed to convert timezone: {str(e)}"}, indent=2
+            ),
+        )
 
 
 if __name__ == "__main__":  # pragma: no cover
