@@ -149,3 +149,35 @@ async def test_create_bookmark_card_not_found(client: Client) -> None:
         assert response[0].type == "text"
         data = json.loads(response[0].text)
         assert data["error"] == "Card not found"
+
+
+async def test_convert_timezone_success(client: Client) -> None:
+    async with client:
+        response = await client.call_tool(
+            "convert_timezone",
+            {
+                "datetime_str": "2024-01-15T10:30:00",
+                "source_timezone": "America/New_York",
+            },
+        )
+        assert response[0].type == "text"
+        data = json.loads(response[0].text)
+        assert data["original"] == "2024-01-15T10:30:00"
+        assert data["timezone"] == "America/New_York"
+        assert "utc" in data
+        assert data["utc"] == "2024-01-15T15:30:00+00:00"
+
+
+async def test_convert_timezone_failed(client: Client) -> None:
+    async with client:
+        response = await client.call_tool(
+            "convert_timezone",
+            {
+                "datetime_str": "2024-01-15T10:30:00",
+                "source_timezone": "Invalid/Timezone",
+            },
+        )
+        assert response[0].type == "text"
+        data = json.loads(response[0].text)
+        assert "error" in data
+        assert "Failed to convert timezone" in data["error"]

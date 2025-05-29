@@ -68,7 +68,7 @@ export $(<env.template)
 The project uses `pytest` for unit testing:
 
 ```bash
-pytest
+uv run pytest
 ```
 
 ### Debugging with MCP Inspector
