@@ -1,0 +1,111 @@
+interactions:
+- request:
+    body: '{"parameters":[{"type":"number","target":["variable",["template-tag","cantidad"]],"value":100}]}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '96'
+      content-type:
+      - application/json
+      host:
+      - metabase.domain.com
+      user-agent:
+      - python-httpx/0.28.1
+      x-api-key:
+      - DUMMY_AUTHORIZATION
+    method: POST
+    uri: https://metabase.domain.com/api/card/2/query
+  response:
+    body:
+      string: !!binary |
+        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
+        AAD//wMAAdQi4MseAAA=
+    headers:
+      Cache-Control:
+      - max-age=0, no-cache, must-revalidate, proxy-revalidate
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Security-Policy:
+      - font-src *; script-src 'self' https://maps.google.com https://accounts.google.com    'sha256-9uFLu5CG8mWlvx0LK6lgendCxUX57TuWk3wkgZpBeWU='
+        'sha256-isH538cVBUY8IMlGYGbWtBwr+cGqkc4mN6nLcA7lUjE=' 'sha256-3N2Z+Nu++/yNMVHIl863JigVmt2Nr9gt2doEMJT2Wzk=';
+        style-src 'self' 'nonce-7Mxkjn48Et'   https://accounts.google.com; manifest-src
+        'self'; connect-src 'self' https://accounts.google.com metabase.us10.list-manage.com   ;
+        img-src * 'self' data:; frame-src 'self' youtube.com *.youtube.com youtu.be
+        *.youtu.be loom.com *.loom.com vimeo.com *.vimeo.com docs.google.com calendar.google.com
+        airtable.com *.airtable.com typeform.com *.typeform.com canva.com *.canva.com
+        codepen.io *.codepen.io figma.com *.figma.com grafana.com *.grafana.com miro.com
+        *.miro.com excalidraw.com *.excalidraw.com notion.com *.notion.com atlassian.com
+        *.atlassian.com trello.com *.trello.com asana.com *.asana.com gist.github.com
+        linkedin.com *.linkedin.com twitter.com *.twitter.com x.com *.x.com; default-src
+        'none'; child-src 'self' https://accounts.google.com;  frame-ancestors 'none';
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Mon, 12 May 2025 17:21:47 GMT
+      Expires:
+      - Tue, 03 Jul 2001 06:00:00 GMT
+      Last-Modified:
+      - Mon, 12 May 2025 17:21:47 GMT
+      Server:
+      - Jetty(12.0.19)
+      Set-Cookie:
+      - metabase.DEVICE=97db5214-db4e-4833-8e56-db390f01abe2; HttpOnly; Path=/; Expires=Fri,
+        12 May 2045 17:21:47 GMT; SameSite=Lax
+      Strict-Transport-Security:
+      - max-age=31536000
+      Transfer-Encoding:
+      - chunked
+      X-Accel-Buffering:
+      - 'no'
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-XSS-Protection:
+      - 1; mode=block
+    status:
+      code: 202
+      message: Accepted
+version: 1

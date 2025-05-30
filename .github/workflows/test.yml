@@ -7,75 +7,57 @@ env:
   PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
 
 jobs:
-  is-repo-ready:
-    if: ${{ github.repository != 'cuenca-mx/fast-agave-app-template' }}
-    outputs:
-      is_ready: ${{ steps.check.outputs.is_ready }}
-    runs-on: ubuntu-latest
-    steps:
-      - id: check
-        name: Check if project structure is ready
-        run: |
-          test -d "tests" && echo "::set-output name=is_ready::true"||echo "::set-output name=is_ready::false"
 
   lint:
-    needs: is-repo-ready
-    if: ${{ needs.is-repo-ready.outputs.is_ready}} == 'true'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Set up Python
-        uses: actions/setup-python@v2.2.2
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.8
-      - name: Install dependencies
-        run: |
-          pip config set global.extra-index-url https://$PYPI_USERNAME:$PYPI_PASSWORD@pypi.cuenca.io:8081
-          make install-test
+          python-version: 3.13
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
       - name: Lint
-        run: make lint
+        run: |
+          make install
+          make lint
 
   pytest:
-    needs: is-repo-ready
-    if: ${{ needs.is-repo-ready.outputs.is_ready}} == 'true'
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python
-      uses: actions/setup-python@v2.2.2
-      with:
-        python-version: 3.8
-    - name: Install dependencies
-      run: |
-          pip config set global.extra-index-url https://$PYPI_USERNAME:$PYPI_PASSWORD@pypi.cuenca.io:8081
-          make install-test
-    - name: Run tests
-      run: |
-        export $(<env.template)
-        pytest
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.13
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+      - name: Run tests
+        run: |
+          make install
+          export $(<env.template)
+          uv run pytest
 
   coverage:
-    needs: is-repo-ready
-    if: ${{ needs.is-repo-ready.outputs.is_ready}} == 'true'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Setup Python
-        uses: actions/setup-python@v2.2.2
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.8
-      - name: Install dependencies
-        run: |
-          pip config set global.extra-index-url https://$PYPI_USERNAME:$PYPI_PASSWORD@pypi.cuenca.io:8081
-          make install-test
+          python-version: 3.13
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
       - name: Generate coverage report
         run: |
+          make install
           export $(<env.template)
-          pytest --cov-report=xml
+          uv run pytest --cov-report=xml
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2.1.0
+        uses: codecov/codecov-action@v5
         with:
-          token: pending
+          token: ${{ secrets.CODECOV_TOKEN }}
           file: ./coverage.xml
           flags: unittests
           name: codecov-umbrella

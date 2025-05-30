@@ -1,0 +1,87 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - metabase.domain.com
+      user-agent:
+      - python-httpx/0.28.1
+      x-api-key:
+      - DUMMY_AUTHORIZATION
+    method: GET
+    uri: https://metabase.domain.com/api/database
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAA/21VwW7bOBT8FUKX7BamYylNnPVlLwV2L8Eemj10i0KgxSebCUWq5KNlN8i/dyhb
+        9qYIHNgSqceZN29GeSm0YlWsvr4Uqbde6VjHZkudqp3qqFi5ZO2s0BSbYHo23hWr4rPvSNBedb0l
+        kctF64M4+CTYi96qg1DBJ6fFYHg7L2ZFS4pToAiYwjhNe2lc67Ex4M4Psk2uyWfH6yZ1ySo2O8Iu
+        U+RrfQAR08iME4ll5mjcBttrFbGuNptAGzWWjzVd74OykvYcVMNYUuezI/vuPVTftjgaO84P+O5V
+        QO9MwfwgLeN3i7XIymkVtNS0MyPar8ggSFIFtIxa08QLMq5o36P/+F6ZiWxARA5bCrnrYDZblk/e
+        ONxYas/XbtRFntnl6pSMlnzoc+FxbnnVQTgw/57QAr2FH4uOg85YtKE9fhtIKyO5aABh+CAjB4gs
+        W2MBJH0/sV0b547qg4LKM7l+poNssAu5jeNJCTYdSW3a9ownsxukSuxl/4xVnISjT70pvVOuAedO
+        4aG3dFsAUuhBiN9RQTZ5KoFaqIcTim/n/mpWa0s1jmrNfnJyo6BS3Rqyut4pm+jod50szF4sxEKU
+        9+IDPn+KD9lOaOOHd3nvr4fHzDrWijkfoms9bItVq2wkNIC+6pBcPYm+4pDoIlMdD655C7UccSak
+        Y9yKz8dUfUIJ/D2OlRgG2cRLBzvECbfFFySuD36NNg9Ce3fFYlCOcwpTJMFbE6dkBrFO0cAXUSLI
+        sKeyQjllD5HiDHsstnSYCcNX8fj44IPVMzHQVSDxhOQIC2e4jTAOT+VQNwE0fKiNnphBmxYXY6tT
+        /6nPbtAQDYSrRXUrF7eyrB7L5WqBv8X8/u7+tvrvPNi6p9CZ0+xXxQCyVExjY7b/w4qjVBNQplGO
+        697VGkFw+jwccgxTj0yL/n6gfz/JJ96FL0v18M+jf3iuckTcxoxz3lajOSGSsqepMV5fmU3jM+JI
+        KPsgacNnDL3uYr1DKsd35EvRWrXzAUV/5/POG0U1L+dV+VH8BjEqubiT5c3v45TBGHOR5ye/VrPy
+        2+vFzeSynS9NZVtfgjGZIw/lV7kXd4/lH6vydnWznC8/VjfLUe/e57jWvq3xi/BEPlmqUU7gaC2U
+        tSL6wFH4VuQs54ixyJHNVMSYryiCytJtRBt8l/2oU4OS/K+AfPYyrgJemjREkV9xo3eUq499ndp5
+        RWzZs8J8y9ef5dutspQGAAA=
+    headers:
+      Cache-Control:
+      - max-age=0, no-cache, must-revalidate, proxy-revalidate
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Security-Policy:
+      - font-src *; script-src 'self' https://maps.google.com https://accounts.google.com    'sha256-9uFLu5CG8mWlvx0LK6lgendCxUX57TuWk3wkgZpBeWU='
+        'sha256-isH538cVBUY8IMlGYGbWtBwr+cGqkc4mN6nLcA7lUjE=' 'sha256-3N2Z+Nu++/yNMVHIl863JigVmt2Nr9gt2doEMJT2Wzk=';
+        style-src 'self' 'nonce-fx3pJ4W8Bf'   https://accounts.google.com; manifest-src
+        'self'; connect-src 'self' https://accounts.google.com metabase.us10.list-manage.com   ;
+        img-src * 'self' data:; frame-src 'self' youtube.com *.youtube.com youtu.be
+        *.youtu.be loom.com *.loom.com vimeo.com *.vimeo.com docs.google.com calendar.google.com
+        airtable.com *.airtable.com typeform.com *.typeform.com canva.com *.canva.com
+        codepen.io *.codepen.io figma.com *.figma.com grafana.com *.grafana.com miro.com
+        *.miro.com excalidraw.com *.excalidraw.com notion.com *.notion.com atlassian.com
+        *.atlassian.com trello.com *.trello.com asana.com *.asana.com gist.github.com
+        linkedin.com *.linkedin.com twitter.com *.twitter.com x.com *.x.com; default-src
+        'none'; child-src 'self' https://accounts.google.com;  frame-ancestors 'none';
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Mon, 12 May 2025 17:37:47 GMT
+      Expires:
+      - Tue, 03 Jul 2001 06:00:00 GMT
+      Last-Modified:
+      - Mon, 12 May 2025 17:37:47 GMT
+      Server:
+      - Jetty(12.0.19)
+      Set-Cookie:
+      - metabase.DEVICE=95052f9f-3360-4732-aa94-ac35acb967d0; HttpOnly; Path=/; Expires=Fri,
+        12 May 2045 17:37:47 GMT; SameSite=Lax
+      Strict-Transport-Security:
+      - max-age=31536000
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-XSS-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

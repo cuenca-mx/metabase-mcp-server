@@ -1,0 +1,98 @@
+interactions:
+- request:
+    body: '{"name":"My Card","display":"table","visualization_settings":{},"dataset_query":{"database":1,"native":{"query":"select
+      * from orders where quantity >= 100","template_tags":{}},"type":"native"},"description":"My
+      Description","collection_id":1,"type":"question"}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '261'
+      content-type:
+      - application/json
+      host:
+      - metabase.domain.com
+      user-agent:
+      - python-httpx/0.28.1
+      x-api-key:
+      - DUMMY_AUTHORIZATION
+    method: POST
+    uri: https://metabase.domain.com/api/card
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAA/61X627iRhR+Fcu/2gqzmFsCUqsSYCPaXImR2lSr0WAfYNrxJTNjWBbxVH2EvljP
+        +E7j7KYSv0LOzHznO/fjg+lSdwOEBVvKmUcVeIQqcxjEnDdMD6QrWKRYGJhD83ZvTCqChkmFu2Fb
+        8MzhinIJDXPLYEfcMA4QodUw3ZBzcPVlEoWSpTApsgxj4QJxqfAI83KpoksOlf9dGhARB4R6m9Al
+        LzGIvTlUIkZVAmTMFfFBUWRNzeEfBzOgPiDP2QS5aeGSSiBqH2nh1ex6dufgQVWo/3y4YutZoGAN
+        Qj9jMuJ0T6pQEnwaKOaevHr4FU9WDLhHBKxQffoPCvWbQ6LGekPN8dOxUbBdPE3npJYy8p1eT+d1
+        nN8kXKLVciuOawjWsnuY308WY+d8BE8AazlWb7yX5tPiyrl3Rjc1JCf3i6ubqfEwn45nT7P7uzq2
+        H3mISf+KawW1lml5XsMzxTxh6Yx+Oy/BFLCWW3L0Tlrn99xX3fa/fDaZPY3vF0nlnpFfBbW2uidM
+        pm3sDRPK9++zYjyfjpzphIzq7HBmt9MnZ3T7UGfABFuywxDklQ0nmLVWjAVQ3XT1e6moH71lThWq
+        xqCCw4lNj4vRnTNzfj9TY6jA1RrzGGuZ2r9lQ/n+603jE44V7ZdQmMODiZoYx1s0YtZfsLdiCcLq
+        X9i0O+isrNVy1bK6/Y5rXa5aHQtWttuHpX3RdQc/Zy+a2eRMaAmpcnN8N7IQa5uYyike8HDNivnH
+        JHlZBrBb5vMMBTKOQGgChQwHYSd7ncGmzgbyZ8gCPXjNdqvds1o9y247dm/Y7QztfrNvX3TszrOp
+        J7Dv4/R9zemI6AFOZMr5nkTxkjO5ORn9evTuBFOQkylirFnZDROCZFiDvwTPY8G6WAIqUz+7mgzu
+        PJgBpuRWp3NGCreKMW4BuZfSu5itotxCqNwsQ70plKtFchd9lVI+8cJgqB0xaHYu7ctB+9msABR7
+        RkoFdcl8lUGn0DVk6pVO9twRabKQLBjJSoLPQgGFxX7o4evEYgF6B5KYmJhncVQuVN+g6FMP0ji4
+        ZLmvrECFf0lEBfVlGR+9tinFSy8pjI7Kt6RDEbAkBK+dn/zAa9l9LDodNeMHYyVC3wgFmiSN3QYE
+        GC9Z6Rk//WjYrRY+V+Bj7SosMrpGSofj8Zim66BhJjxBgSA+jSJknnlDew7rWnvZK9I+awK6TnU6
+        VZZK4jGBhPi+cDMkJBLfmP3d6Iv4vLM/P368ufsFZvMLZXfN05UzjUWuSWeMBR5TFgtWobZcFW2x
+        PjrddhKaLPDfqO6yPs/XUo56o5Yx/v6SZhfGV6UOPRyrtmpraKw2odAO4rAFXrvCp6JXa7vkMZav
+        xgPXTVyHsQ8Dygkm5ZouWRASPxSUgywDRMIoT/oyW/PRlCL983dgPGRQhgfGdQJl3BZQhZ5wF4DI
+        20Waq0WflBghXhZbdqkmTbKCKbMkFfDQpdkXzIes7ciIulUVOY88V5Ka/2/htvpJalwOO+1mqzto
+        XV486wjpL5CkL2IyyFTNttXsdZu9Zs/4DsPdbg8635uVusjqoWxrlQ+eOsX1HaMss1jqmip7Y9ZG
+        4vj0Q8rDAle5H4//AqZa+Gj5DQAA
+    headers:
+      Cache-Control:
+      - max-age=0, no-cache, must-revalidate, proxy-revalidate
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Security-Policy:
+      - font-src *; script-src 'self' https://maps.google.com https://accounts.google.com    'sha256-9uFLu5CG8mWlvx0LK6lgendCxUX57TuWk3wkgZpBeWU='
+        'sha256-isH538cVBUY8IMlGYGbWtBwr+cGqkc4mN6nLcA7lUjE=' 'sha256-3N2Z+Nu++/yNMVHIl863JigVmt2Nr9gt2doEMJT2Wzk=';
+        style-src 'self' 'nonce-rcBgLHpr4T'   https://accounts.google.com; manifest-src
+        'self'; connect-src 'self' https://accounts.google.com metabase.us10.list-manage.com   ;
+        img-src * 'self' data:; frame-src 'self' youtube.com *.youtube.com youtu.be
+        *.youtu.be loom.com *.loom.com vimeo.com *.vimeo.com docs.google.com calendar.google.com
+        airtable.com *.airtable.com typeform.com *.typeform.com canva.com *.canva.com
+        codepen.io *.codepen.io figma.com *.figma.com grafana.com *.grafana.com miro.com
+        *.miro.com excalidraw.com *.excalidraw.com notion.com *.notion.com atlassian.com
+        *.atlassian.com trello.com *.trello.com asana.com *.asana.com gist.github.com
+        linkedin.com *.linkedin.com twitter.com *.twitter.com x.com *.x.com; default-src
+        'none'; child-src 'self' https://accounts.google.com;  frame-ancestors 'none';
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Mon, 12 May 2025 19:15:49 GMT
+      Expires:
+      - Tue, 03 Jul 2001 06:00:00 GMT
+      Last-Modified:
+      - Mon, 12 May 2025 19:15:49 GMT
+      Server:
+      - Jetty(12.0.19)
+      Set-Cookie:
+      - metabase.DEVICE=f2f91188-b42a-4990-a1e1-6f5f40f0f6ad; HttpOnly; Path=/; Expires=Fri,
+        12 May 2045 19:15:49 GMT; SameSite=Lax
+      Strict-Transport-Security:
+      - max-age=31536000
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-XSS-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -1,0 +1,76 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - metabase.domain.com
+      user-agent:
+      - python-httpx/0.28.1
+      x-api-key:
+      - DUMMY_AUTHORIZATION
+    method: GET
+    uri: https://metabase.domain.com/api/collection
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAA/3WR3UrDQBCFX6XsdapJMVVyJ4Ig2FZQbyxlmW6m7cpmN8xuWoL4SD6FL+Ykkh/Q
+        3g2zM+c7c3b9IaAKB0c61NLgEY3IbGVMJBRYeeI2iixQhZGwUHAtlhX6QDC5tWC+v4JWICKBux2q
+        oI8owSp+d+RFtt78qlDb4N0dGI/jYeMUBO1sxyyB0Aap867RVIKcC8zQXpZI3jG3l2rkczQYOvXP
+        6OxBOXpFuhzzgNSBfeS9njfVnomFKqVHOiLJAgNswaPop6VjG63tkdFzaS3unibPrdJkMSh1d0h3
+        sswYZEJdYn+7lx6K0gzBNXPzwbXMNXGQpu42OLvm6ja05QrfXx8TmfrF8n5f29XD1uSMHiIXl+LX
+        pi9Bjal/UyaEwDwIvDWLZ+k0TqfJ/CW5yZLrLI4v0ivuJm/ivw/Z/ACIjVeuYwIAAA==
+    headers:
+      Cache-Control:
+      - max-age=0, no-cache, must-revalidate, proxy-revalidate
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Security-Policy:
+      - font-src *; script-src 'self' https://maps.google.com https://accounts.google.com    'sha256-9uFLu5CG8mWlvx0LK6lgendCxUX57TuWk3wkgZpBeWU='
+        'sha256-isH538cVBUY8IMlGYGbWtBwr+cGqkc4mN6nLcA7lUjE=' 'sha256-3N2Z+Nu++/yNMVHIl863JigVmt2Nr9gt2doEMJT2Wzk=';
+        style-src 'self' 'nonce-7q2bBrgEOH'   https://accounts.google.com; manifest-src
+        'self'; connect-src 'self' https://accounts.google.com metabase.us10.list-manage.com   ;
+        img-src * 'self' data:; frame-src 'self' youtube.com *.youtube.com youtu.be
+        *.youtu.be loom.com *.loom.com vimeo.com *.vimeo.com docs.google.com calendar.google.com
+        airtable.com *.airtable.com typeform.com *.typeform.com canva.com *.canva.com
+        codepen.io *.codepen.io figma.com *.figma.com grafana.com *.grafana.com miro.com
+        *.miro.com excalidraw.com *.excalidraw.com notion.com *.notion.com atlassian.com
+        *.atlassian.com trello.com *.trello.com asana.com *.asana.com gist.github.com
+        linkedin.com *.linkedin.com twitter.com *.twitter.com x.com *.x.com; default-src
+        'none'; child-src 'self' https://accounts.google.com;  frame-ancestors 'none';
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Fri, 16 May 2025 18:24:42 GMT
+      Expires:
+      - Tue, 03 Jul 2001 06:00:00 GMT
+      Last-Modified:
+      - Fri, 16 May 2025 18:24:42 GMT
+      Server:
+      - Jetty(12.0.19)
+      Set-Cookie:
+      - metabase.DEVICE=57f46179-2585-4ced-b5f7-e94e7835f3c7; HttpOnly; Path=/; Expires=Tue,
+        16 May 2045 18:24:42 GMT; SameSite=None; Secure
+      Strict-Transport-Security:
+      - max-age=31536000
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-XSS-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1
