@@ -246,7 +246,7 @@ dependencies = [
 test = [
     { name = "mypy" },
     { name = "pytest" },
-    { name = "pytest-asyncio" },
+    { name = "pytest-anyio" },
     { name = "pytest-cov" },
     { name = "pytest-vcr" },
     { name = "ruff" },
@@ -257,7 +257,7 @@ requires-dist = [
     { name = "fastmcp", specifier = ">=2.3.4" },
     { name = "mypy", marker = "extra == 'test'", specifier = ">=1.15.0" },
     { name = "pytest", marker = "extra == 'test'", specifier = ">=8.3.5" },
-    { name = "pytest-asyncio", marker = "extra == 'test'", specifier = ">=0.26.0" },
+    { name = "pytest-anyio", marker = "extra == 'test'", specifier = ">=0.0.0" },
     { name = "pytest-cov", marker = "extra == 'test'", specifier = ">=6.1.1" },
     { name = "pytest-vcr", marker = "extra == 'test'", specifier = ">=1.0.2" },
     { name = "ruff", marker = "extra == 'test'", specifier = ">=0.11.10" },
@@ -541,15 +541,16 @@ wheels = [
 ]
 
 [[package]]
-name = "pytest-asyncio"
-version = "0.26.0"
+name = "pytest-anyio"
+version = "0.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
+    { name = "anyio" },
     { name = "pytest" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/8e/c4/453c52c659521066969523e87d85d54139bbd17b78f09532fb8eb8cdb58e/pytest_asyncio-0.26.0.tar.gz", hash = "sha256:c4df2a697648241ff39e7f0e4a73050b03f123f760673956cf0d72a4990e312f", size = 54156, upload-time = "2025-03-25T06:22:28.883Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/00/44/a02e5877a671b0940f21a7a0d9704c22097b123ed5cdbcca9cab39f17acc/pytest-anyio-0.0.0.tar.gz", hash = "sha256:b41234e9e9ad7ea1dbfefcc1d6891b23d5ef7c9f07ccf804c13a9cc338571fd3", size = 1560, upload-time = "2021-06-29T22:57:30.846Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/20/7f/338843f449ace853647ace35870874f69a764d251872ed1b4de9f234822c/pytest_asyncio-0.26.0-py3-none-any.whl", hash = "sha256:7b51ed894f4fbea1340262bdae5135797ebbe21d8638978e35d31c6d19f72fb0", size = 19694, upload-time = "2025-03-25T06:22:27.807Z" },
+    { url = "https://files.pythonhosted.org/packages/c6/25/bd6493ae85d0a281b6a0f248d0fdb1d9aa2b31f18bcd4a8800cf397d8209/pytest_anyio-0.0.0-py2.py3-none-any.whl", hash = "sha256:dc8b5c4741cb16ff90be37fddd585ca943ed12bbeb563de7ace6cd94441d8746", size = 1999, upload-time = "2021-06-29T22:57:29.158Z" },
 ]
 
 [[package]]
