@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
+import aiofiles
 import httpx
 from fastmcp import Context, FastMCP
 from mcp.types import TextContent
@@ -221,12 +222,12 @@ async def convert_timezone(
         fields and their relationships.
     """,
 )
-def database_knowledge_base() -> str:
+async def database_knowledge_base() -> str:
     path = (
         Path(__file__).parent.parent / "database_knowledge_base.md"
     ).resolve()
-    with open(path) as file:
-        content = file.read()
+    async with aiofiles.open(path) as file:
+        content = await file.read()
     return content
 
 
