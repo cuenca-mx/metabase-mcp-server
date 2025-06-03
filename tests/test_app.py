@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 import aiofiles
 import pytest
@@ -176,7 +177,10 @@ async def test_convert_timezone_failed(client: Client) -> None:
 
 async def test_database_knowledge_base(client: Client) -> None:
     response = await client.read_resource("resource://database_knowledge_base")
-    async with aiofiles.open("database_knowledge_base.md") as f:
+    path = (
+        Path(__file__).parent.parent / "database_knowledge_base.md"
+    ).resolve()
+    async with aiofiles.open(path) as f:
         content = await f.read()
     assert isinstance(response[0], TextResourceContents)
     assert content == response[0].text
