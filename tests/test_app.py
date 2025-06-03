@@ -1,7 +1,9 @@
 import json
 
+import aiofiles
 import pytest
 from fastmcp import Client
+from mcp.types import TextResourceContents
 
 
 @pytest.mark.vcr
@@ -170,3 +172,11 @@ async def test_convert_timezone_failed(client: Client) -> None:
     data = json.loads(response[0].text)
     assert "error" in data
     assert "Failed to convert timezone" in data["error"]
+
+
+async def test_database_knowledge_base(client: Client) -> None:
+    response = await client.read_resource("resource://database_knowledge_base")
+    async with aiofiles.open("database_knowledge_base.md") as f:
+        content = await f.read()
+    assert isinstance(response[0], TextResourceContents)
+    assert content == response[0].text

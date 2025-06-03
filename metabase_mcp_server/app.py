@@ -4,6 +4,7 @@ from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from datetime import datetime
+from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
@@ -210,6 +211,23 @@ async def convert_timezone(
                 {"error": f"Failed to convert timezone: {str(e)}"}, indent=2
             ),
         )
+
+
+@mcp.resource(
+    uri="resource://database_knowledge_base",
+    name="database_knowledge_base",
+    description="""
+        Provides documentation about database schema, tables,
+        fields and their relationships.
+    """,
+)
+def database_knowledge_base() -> str:
+    path = (
+        Path(__file__).parent.parent / "database_knowledge_base.md"
+    ).resolve()
+    with open(path) as file:
+        content = file.read()
+    return content
 
 
 if __name__ == "__main__":  # pragma: no cover
