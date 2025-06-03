@@ -2,7 +2,7 @@
 
 This project implements an MCP server to interact with the [Metabase API](https://www.metabase.com/), exposing key functionality via a MCP interface.
 
-## Features
+## Tools
 
 - 🔍 List Metabase cards
 - 🗄️ List available databases
@@ -11,6 +11,13 @@ This project implements an MCP server to interact with the [Metabase API](https:
 - 📝 Create new cards
 - 🔖 Create bookmark
 - 📁 List collections
+- 🕒 Convert timezones
+
+## Resources
+- 📚 Database Knowledge Base - Documentation about database schema, tables, fields and their relationships
+
+> **Note**: Before using this resource, make sure to modify the `database_knowledge_base.md` file with your own database schema, tables, fields and business logic information.
+
 
 ## Requirements
 

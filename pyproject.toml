@@ -5,6 +5,7 @@ description = "A Model Context Protocol server that enables interaction with Met
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "aiofiles>=24.1.0",
     "fastmcp>=2.3.4",
 ]
 
@@ -16,6 +17,7 @@ test = [
     "pytest-cov>=6.1.1",
     "pytest-vcr>=1.0.2",
     "ruff>=0.11.10",
+    "types-aiofiles>=24.1.0.20250516",
 ]
 
 [tool.pytest.ini_options]
