@@ -18,6 +18,9 @@ test = [
     "ruff>=0.11.10",
 ]
 
+[project.scripts]
+metabase-mcp = "metabase_mcp_server.app:main"
+
 [tool.pytest.ini_options]
 addopts = "-p no:warnings -v --cov-report term-missing --cov=metabase_mcp_server"
 
