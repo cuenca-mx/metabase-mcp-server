@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/cuenca-mx-metabase-mcp-server-badge.png)](https://mseep.ai/app/cuenca-mx-metabase-mcp-server)
+
 # Metabase MCP Server
 
 This project implements an MCP server to interact with the [Metabase API](https://www.metabase.com/), exposing key functionality via a MCP interface.
