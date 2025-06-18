@@ -212,5 +212,9 @@ async def convert_timezone(
         )
 
 
-if __name__ == "__main__":  # pragma: no cover
+def main() -> None:  # pragma: no cover
     mcp.run()
+
+
+if __name__ == "__main__":  # pragma: no cover
+    main()
